@@ -14,6 +14,18 @@ const port = 8081;
      res.sendFile(path.join(__dirname+'/Routes/login.html'))
  })
 
+ router.get('/products', function(req,res){
+    res.sendFile(path.join(__dirname+'/Routes/products.html'))
+})
+
+ router.get('/profile', function(req,res){
+    res.sendFile(path.join(__dirname+'/Routes/profile.html'))
+})
+
+router.get('/contact', function(req,res){
+    res.sendFile(path.join(__dirname+'/Routes/contact.html'))
+})
+
  app.use('/', router);
 
 var server = app.listen(port, function(){
