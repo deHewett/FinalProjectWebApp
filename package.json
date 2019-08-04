@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/deHewett/FinalProjectWebApp/issues"
   },
-  "homepage": "https://github.com/deHewett/FinalProjectWebApp#readme"
+  "homepage": "https://github.com/deHewett/FinalProjectWebApp#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1"
+  }
 }
