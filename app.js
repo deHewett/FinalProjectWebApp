@@ -1,17 +1,20 @@
-var http = require("http");
-var express = require("express");
-var app = express();
-var fs = require('fs');
-var router = require('./Routes');
+const http = require("http");
+const express = require("express");
+const app = express();
+const path = require('path');
+const fs = require('fs');
+const router = express.Router();
 const port = 8081;
 
- 
+ router.get('/', function(req,res){
+     res.sendFile(path.join(__dirname+'/Routes/index.html'))
+ })
 
-let handleRequest = (req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
+ app.use('/', router);
+
+var server = app.listen(port, function(){
+    var host = server.address().address
+    var port = server.address().port
+    console.log('listening at port ', host, port)
+})
  
-};
- 
-http.createServer(router.handleRequest).listen(port);
