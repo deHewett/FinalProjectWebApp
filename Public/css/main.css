@@ -1,3 +1,4 @@
+/* navigation menu*/
 ul {
     list-style-type: none;
     margin: 0;
@@ -31,3 +32,25 @@ li a:hover {
     display: inline-block;
     width: 66%;
 }
+
+/*images*/
+img {
+    height : 118px;
+    width:140px
+}
+/* heading h1*/
+
+h1 {
+    text-align: center;
+}
+
+/* carousel*/
+.MultiCarousel { float: left; overflow: hidden; padding: 20px; width: 95%; position:relative; }
+    .MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+        .MultiCarousel .MultiCarousel-inner .item { float: left;}
+        .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
+    .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
+    .MultiCarousel .leftLst { left:0; }
+    .MultiCarousel .rightLst { right:0; }
+    
+        .MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
