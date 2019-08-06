@@ -21,3 +21,13 @@ li a {
 li a:hover {
     background-color: #afd275;
 }
+
+#login{
+    display: inline-block;
+    width: 33%;
+}
+
+#signup{
+    display: inline-block;
+    width: 66%;
+}

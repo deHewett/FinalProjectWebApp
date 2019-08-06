@@ -6,6 +6,8 @@ const fs = require('fs');
 const router = express.Router();
 const port = 8081;
 
+app.use(express.static(__dirname + '/Public'));
+
 //app.use(express.static(__dirname + '/public')); getting css to work
 
  router.get('/', function(req,res){
@@ -15,9 +17,9 @@ const port = 8081;
  router.get('/login', function(req,res){
      res.sendFile(path.join(__dirname+'/Routes/login.html'))
  })
- router.post('/login', passport.authenticate('local'), function(req,res){
+ /*router.post('/login', passport.authenticate('local'), function(req,res){
      res.redirect('/users/' + req.user.username);
- });
+ });*/
 
  router.get('/products', function(req,res){
     res.sendFile(path.join(__dirname+'/Routes/products.html'))
@@ -32,6 +34,7 @@ router.get('/contact', function(req,res){
 })
 
  app.use('/', router);
+ 
 
 var server = app.listen(port, function(){
     var host = server.address().address
