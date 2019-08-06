@@ -1,12 +1,22 @@
 const http = require("http");
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
+const mongoose = require("mongoose");
 const port = 8081;
+const passport = require("passport");
+
+mongoose.connect('mongodb://localhost:27017/login')
 
 app.use(express.static(__dirname + '/Public'));
+app.use(session({
+    secret:"thesecret",
+    saveUninitialized: false,
+    resave: false
+}))
 
 //app.use(express.static(__dirname + '/public')); getting css to work
 
