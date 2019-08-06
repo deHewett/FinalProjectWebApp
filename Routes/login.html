@@ -14,11 +14,34 @@
         <li><a href="/staff">Staff</a></li>
     </ul>
 <body>
-    <div id="login">
-        <h1>Login</h1>
-    </div>
-    <div id="signup">
-        <p>Or signup.</p>
+    <div style="overflow: hidden; width:100%;">
+        <div id="login">
+            <!--<h1>Login</h1>-->
+            <form id="login-form">
+                    <h1 style="text-align: center">Log in!</h1>
+                    <label>Username:</label>
+                    <input type="text"/><br>
+                    <label>Password:</label>
+                    <input type="password"/>
+                    <button id="post-login" formaction="/">Log in</button>
+            </form>
+        </div>
+        <div id="signup">
+                <form id="signup-form">
+                        <h1 style="text-align: center">Sign up!</h1>
+                        <label>Email address:</label>
+                        <input type="text"/><br>
+                        <label>First name:</label>
+                        <input type="text"/><br>
+                        <label>Last name:</label>
+                        <input type="text"/><br>
+                        <label>Contact Number:</label>
+                        <input type="text"/><br>
+
+                        <button id="post-signup" formaction="/profile">Sign up</button>
+                </form>
+            <!--<h1>Or signup.</h1>-->
+        </div>
     </div>
 
 </body>
