@@ -6,6 +6,8 @@ const fs = require('fs');
 const router = express.Router();
 const port = 8081;
 
+//app.use(express.static(__dirname + '/public')); getting css to work
+
  router.get('/', function(req,res){
      res.sendFile(path.join(__dirname+'/Routes/index.html'))
  })
