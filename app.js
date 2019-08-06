@@ -13,6 +13,9 @@ const port = 8081;
  router.get('/login', function(req,res){
      res.sendFile(path.join(__dirname+'/Routes/login.html'))
  })
+ router.post('/login', passport.authenticate('local'), function(req,res){
+     res.redirect('/users/' + req.user.username);
+ });
 
  router.get('/products', function(req,res){
     res.sendFile(path.join(__dirname+'/Routes/products.html'))
