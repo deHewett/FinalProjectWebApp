@@ -23,14 +23,57 @@ li a:hover {
     background-color: #afd275;
 }
 
-#login{
+#login-form input{
+    margin-top: 10px;
+    width: 90%;
+}
+#login-form label{
+    margin-left: 150px;
+    width: 100%;
+}
+#login-form button {
+    margin-top: 10px;
+    width: 91%;
+}
+
+#signup-form input{
+    margin-top: 10px;
+    width: 60%;
+}
+#signup-form label{
     display: inline-block;
-    width: 33%;
+    text-align: right;
+    width: 150px;
+}
+#signup-form button{
+    margin-top: 10px;
+    margin-left: 154px;
+    width: 60.5%;
+}
+
+#login{
+    float: left;
+    width: 45%;
+    height: 90vh;
+    background-color: #d3efa5;
+}
+#login-form{
+    margin-left: 6.5%;
+    position: absolute;
+    top: 40%;
 }
 
 #signup{
-    display: inline-block;
-    width: 66%;
+    float: right;
+    width: 55%;
+    height: 90vh;
+    background-color: #f9f9f9;
+}
+#signup-form{
+    margin-left: 6%;
+    position: absolute;
+    top: 40%;
+    width: 50%
 }
 
 /*images*/
