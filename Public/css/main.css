@@ -102,7 +102,7 @@ h1 {
 .container {
     width: 100%;
     height: 100%;
-    background: rgb(244, 247, 247);
+    background:white;
     margin: auto;
     padding: 10px;
 }
@@ -113,8 +113,41 @@ h1 {
     float: left;
 }
 .two {
-    margin-left: 15%;
+    width:100%;
+    /*margin-left: 15%;*/
     height: auto;
     background: white;
+    margin-bottom: 5%;
 }
 
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 15%;
+    padding: 10px;
+    text-align: center;
+    background-color: #CAE4DB ;
+    margin-bottom: 1%;
+    margin:1%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+/* footer*/
+#container{
+    height: 100%;
+    position: relative;
+}
+
+footer{
+    position: absolute;;
+    bottom:0;
+    width:100%;
+    height:auto;   
+   
+}
