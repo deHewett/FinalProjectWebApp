@@ -151,3 +151,20 @@ footer{
     height:auto;   
    
 }
+/* buy button*/
+
+button{
+    border:none;
+    border-radius: 25%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#buy{
+    background-color: #afd275;
+    
+}
