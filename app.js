@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const path = require('path');
 const fs = require('fs');
+<<<<<<< Updated upstream
 const router = express.Router();
 const port = 8081;
 
@@ -35,6 +36,30 @@ router.get('/contact', function(req,res){
 
  app.use('/', router);
  
+=======
+const mongoose = require("mongoose");
+const port = 8081;
+const passport = require("passport");
+
+const index = require("./Routes/index");
+const login = require("./Routes/login");
+const auth = require("./Routes/auth")(passport);
+
+mongoose.connect('mongodb://localhost:27017/login')
+
+app.use(express.static(__dirname + '/Public'));
+
+
+app.use('/', index);
+app.use('/auth', auth);
+app.use('/login', login);
+
+app.use(session({
+    secret:"thesecret",
+    saveUninitialized: false,
+    resave: false
+}));
+>>>>>>> Stashed changes
 
 var server = app.listen(port, function(){
     var host = server.address().address
@@ -43,4 +68,3 @@ var server = app.listen(port, function(){
 })
 
 module.exports = app;
- 
