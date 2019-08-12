@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const User = require('../db/User');
+const User = require('../Models/user');
 
 module.exports = function(passport) {
-    router.post('./signup', function(req,res){
+    router.post('/login', function(req,res){
         var body = req.body,
         username = body.username,
         password = body.password;
-        User.fineOne({username:username}, function(err,doc){
+        User.findOne({username:username}, function(err,doc){
             if(err) {res.status(500).send('error occured')}
             else{
                 if(doc){

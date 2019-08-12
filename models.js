@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-export const userSchema = new Schema({
+// user creation 
+
+const userSchema = new Schema({
     username:{
         type:String,
         required:true,
@@ -37,7 +39,45 @@ export const userSchema = new Schema({
     },
 });
 
-export const productSchema = new Schema({
+// user signup 
+
+const SignUpSchema = new Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    username:{
+        type:String,
+        required:"Enter a username",
+    },
+    password:{
+        type:String,
+        required:"Enter a password",
+    },
+    userType:{
+        type:String,
+        required: false
+    },
+    fullName:{
+        type:String,
+        required: "Enter your full name"
+    },
+    email:{
+        type:String,
+        required: "Enter your email address"
+    },
+    contactNumber:{
+        type:String,
+        required: "Enter your contact number"
+    },
+    billingAddress:{
+        type:String,
+        required: "Enter your billing address"
+    },
+    deliveryAddress:{
+        type:String,
+        required: "Enter your deliver address"
+    },
+});
+
+const productSchema = new Schema({
     productID:{
         type: Number,
         required:false,
@@ -55,3 +95,7 @@ export const productSchema = new Schema({
         required:true,
     },
 })
+
+module.exports = {
+    productSchema, SignUpSchema, userSchema
+}

@@ -1,70 +1,36 @@
 const http = require("http");
+const routes = require('./routes');
 const express = require("express");
 const app = express();
 const path = require('path');
 const fs = require('fs');
-<<<<<<< Updated upstream
-const router = express.Router();
-const port = 8081;
-
-app.use(express.static(__dirname + '/Public'));
-
-//app.use(express.static(__dirname + '/public')); getting css to work
-
- router.get('/', function(req,res){
-     res.sendFile(path.join(__dirname+'/Routes/index.html'))
- })
- 
- router.get('/login', function(req,res){
-     res.sendFile(path.join(__dirname+'/Routes/login.html'))
- })
- /*router.post('/login', passport.authenticate('local'), function(req,res){
-     res.redirect('/users/' + req.user.username);
- });*/
-
- router.get('/products', function(req,res){
-    res.sendFile(path.join(__dirname+'/Routes/products.html'))
-})
-
- router.get('/profile', function(req,res){
-    res.sendFile(path.join(__dirname+'/Routes/profile.html'))
-})
-
-router.get('/contact', function(req,res){
-    res.sendFile(path.join(__dirname+'/Routes/contact.html'))
-})
-
- app.use('/', router);
- 
-=======
+const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const port = 8081;
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const passport = require("passport");
+const config = require("./Config/database");
+// Passport config
+require('./Config/passport-setup')(passport)
+app.use(passport.initialize());
+app.use(passport.session());
 
-const index = require("./Routes/index");
-const login = require("./Routes/login");
-const auth = require("./Routes/auth")(passport);
 
-mongoose.connect('mongodb://localhost:27017/login')
-
+routes(app);
+mongoose.connect(config.database)
+let db = mongoose.connection;
+app.use(flash());
 app.use(express.static(__dirname + '/Public'));
 
 
-app.use('/', index);
-app.use('/auth', auth);
-app.use('/login', login);
-
-app.use(session({
-    secret:"thesecret",
-    saveUninitialized: false,
-    resave: false
-}));
->>>>>>> Stashed changes
 
 var server = app.listen(port, function(){
     var host = server.address().address
     var port = server.address().port
     console.log('listening at port ', host, port)
-})
 
 module.exports = app;
+})
+

@@ -17,28 +17,34 @@
     <div style="overflow: hidden; width:100%;">
         <div id="login">
             <!--<h1>Login</h1>-->
-            <form id="login-form">
+            <form id="login-form" method="post" action="/loginUser">
                     <h1 style="text-align: center">Log in!</h1>
                     <label>Username:</label>
-                    <input type="text"/><br>
+                    <input type="text" name="username"/><br>
                     <label>Password:</label>
-                    <input type="password"/>
-                    <button id="post-login" formaction="/">Log in</button>
+                    <input type="password" name="password"/>
+                    <input type="submit" label="login">
             </form>
         </div>
         <div id="signup">
-                <form id="signup-form">
+                <form id="signup-form" method="post" action="/signUp">
                         <h1 style="text-align: center">Sign up!</h1>
+                        <label>Username:</label>
+                        <input type="text" name="username"/><br>
+                        <label>Password:</label>
+                        <input  type="password" name="password"/><br>
+                        <label>Full Name:</label>
+                        <input type="text" name="fullName" /><br>
                         <label>Email address:</label>
-                        <input type="text"/><br>
-                        <label>First name:</label>
-                        <input type="text"/><br>
-                        <label>Last name:</label>
-                        <input type="text"/><br>
+                        <input type="text" name="email" /><br>
                         <label>Contact Number:</label>
-                        <input type="text"/><br>
+                        <input type="text" name="contactNumber" /><br>
+                        <label>Billing Address:</label>
+                        <input type="text" name="billingAddress" /><br>
+                        <label>Delivery Address:</label>
+                        <input type="text" name="deliveryAddress" /><br>
 
-                        <button id="post-signup" formaction="/profile">Sign up</button>
+                        <input type="submit" label="Sign up" >
                 </form>
             <!--<h1>Or signup.</h1>-->
         </div>
