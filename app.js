@@ -20,11 +20,10 @@ require('./Config/passport-setup')(passport)
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('*', function(req,res,next){
-    res.locals.user = req.user || null;
+app.use(function(req,res,next){
+    res.locals.login = req.isAuthenticated();
     next();
-
-})
+});
 
 
 
