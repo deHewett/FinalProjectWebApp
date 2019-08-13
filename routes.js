@@ -87,7 +87,7 @@ const routes = (app) => {
             }
             else{
                 req.logIn(user, function(err){
-                    return res.redirect('/products');
+                    return res.redirect('/');
                 });
             }
         })(req,res,next);
