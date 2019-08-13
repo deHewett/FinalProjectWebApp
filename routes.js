@@ -9,16 +9,14 @@ const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 
 const routes = (app) => {
-    app.get('/', function(req,res) {
-        res.sendFile(path.join(__dirname + "/Views/index.html"));
-    });
-    app.get('/login', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/login.html'));
-    });
+    app.get('/', (req,res) => res.render('index'));
+
+    app.get('/login', (req,res) => res.render('login'));
+    
     app.get('/profile', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/profile.html'));
     });
-    app.get('/products', (req, res)=> res.render('products.ejs'));
+    app.get('/products', (req, res)=> res.render('products'));
     app.get('/addProduct', (req, res) => res.render('addProduct'));
     /*app.get('/products', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/products.html'));
