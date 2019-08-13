@@ -1,21 +1,37 @@
 const http = require("http");
+const routes = require('./routes');
 const express = require("express");
 const session = require("express-session");
 const app = express();
 const path = require('path');
 const fs = require('fs');
-const router = express.Router();
 const mongoose = require("mongoose");
 const port = 8081;
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 const passport = require("passport");
-const multer = require("multer");
+const config = require("./Config/database");
 const ejs = require("ejs");
+const multer = require("multer");
 
-var url = "mongodb://localhost:27017/greenworld";
+// Passport config
+require('./Config/passport-setup')(passport)
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function(req,res,next){
+    res.locals.user = req.user || null;
+    next();
+
+})
+
+
+
 //setting ejs
 app.set('view engine', 'ejs');
 //database connection
-mongoose.connect(url)
+mongoose.connect(config.database)
 let db = mongoose.connection;
 
 db.once('open', function(){
@@ -56,69 +72,16 @@ const upload = multer({
     }
 }
 
+routes(app);
 app.use(express.static(__dirname + '/Public'));
-/*app.use(session({
-    secret:"thesecret",
-    saveUninitialized: false,
-    resave: false
-}))*/
-
-//app.use(express.static(__dirname + '/public')); getting css to work
-
- router.get('/', function(req,res){
-     res.sendFile(path.join(__dirname+'/views/index.html'))
- })
- 
- router.get('/login', function(req,res){
-     res.sendFile(path.join(__dirname+'/views/login.html'))
- })
- /*router.post('/login', passport.authenticate('local'), function(req,res){
-     res.redirect('/users/' + req.user.username);
- });*/
-
- router.get('/products', (req, res)=> res.render('products'));
-
- router.get('/profile', function(req,res){
-    res.sendFile(path.join(__dirname+'/views/profile.html'))
-})
-
-router.get('/contact', function(req,res){
-    res.sendFile(path.join(__dirname+'/views/contact.html'))
-})
-// testing ejs
-router.get('/addProduct', (req, res) => res.render('addProduct'));
 
 
-router.post('/addProduct', function(req, res){// currently working
-    upload(req,res,(err) =>{
-        if(err){
-            res.render ('addProduct', {
-                msg: err
-            });
-        }else {
-            console.log(req.file);
-            //req.file.toString();
-            if (req.file == undefined){
-                res.render('addProduct',{msg: 'Error: no file selected'});
-            }
-            else{
-                res.render('products', {
-                    msg:'File uploaded!',
-                    file: `images/${req.file.filename}`
-                });
-            }
-        } 
-    })
-})
-
- app.use('/', router);
- 
 
 var server = app.listen(port, function(){
     var host = server.address().address
     var port = server.address().port
     console.log('listening at port ', host, port)
-})
 
 module.exports = app;
- 
+})
+
