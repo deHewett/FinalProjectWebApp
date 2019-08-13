@@ -1,6 +1,7 @@
 const http = require("http");
 const routes = require('./routes');
 const express = require("express");
+const session = require("express-session");
 const app = express();
 const path = require('path');
 const fs = require('fs');
@@ -23,6 +24,11 @@ mongoose.connect(config.database)
 let db = mongoose.connection;
 app.use(flash());
 app.use(express.static(__dirname + '/Public'));
+app.use(session({
+    secret:"thesecret",
+    saveUninitialized: false,
+    resave: false
+}))
 
 
 
