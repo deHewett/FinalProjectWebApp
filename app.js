@@ -5,7 +5,6 @@ const session = require("express-session");
 const app = express();
 const path = require('path');
 const fs = require('fs');
-const flash = require("connect-flash");
 const mongoose = require("mongoose");
 const port = 8081;
 const bodyParser = require('body-parser');
@@ -13,19 +12,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const passport = require("passport");
 const config = require("./Config/database");
+const ejs = require("ejs");
+const multer = require("multer");
+
 // Passport config
 require('./Config/passport-setup')(passport)
 app.use(passport.initialize());
 app.use(passport.session());
 
-const multer = require("multer");
-const ejs = require("ejs");
+app.get('*', function(req,res,next){
+    res.locals.user = req.user || null;
+    next();
 
-var url = config.database;
+})
+
+
+
 //setting ejs
 app.set('view engine', 'ejs');
 //database connection
-mongoose.connect(url)
+mongoose.connect(config.database)
 let db = mongoose.connection;
 
 db.once('open', function(){
@@ -67,15 +73,7 @@ const upload = multer({
 }
 
 routes(app);
-mongoose.connect(config.database)
-let db = mongoose.connection;
-app.use(flash());
 app.use(express.static(__dirname + '/Public'));
-/*app.use(session({
-    secret:"thesecret",
-    saveUninitialized: false,
-    resave: false
-}))*/
 
 
 

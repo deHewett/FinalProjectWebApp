@@ -18,9 +18,11 @@ const routes = (app) => {
     app.get('/profile', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/profile.html'));
     });
-    app.get('/products', function(req,res) {
+    app.get('/products', (req, res)=> res.render('products.ejs'));
+    app.get('/addProduct', (req, res) => res.render('addProduct'));
+    /*app.get('/products', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/products.html'));
-    });
+    });*/
     app.get('/cart', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/cart.html'));
     });
