@@ -12,24 +12,21 @@ const routes = (app) => {
     app.get('/', (req,res) => res.render('index'));
 
     app.get('/login', (req,res) => res.render('login'));
-    
-    app.get('/profile', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/profile.html'));
-    });
+
+    app.get('/profile', (req,res) => res.render('profile'));
+
     app.get('/products', (req, res)=> res.render('products'));
+
     app.get('/addProduct', (req, res) => res.render('addProduct'));
     /*app.get('/products', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/products.html'));
     });*/
-    app.get('/cart', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/cart.html'));
-    });
-    app.get('/contact', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/contact.html'));
-    });
-    app.get('/staff', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/staff.html'));
-    });
+    app.get('/cart', (req,res)=> res.render('cart'));
+    
+    app.get('/contact', (req,res)=> res.render('contact'));
+    
+    app.get('/staff', (req,res) => res.render('staff'));
+    
 
     //signup page post request
     app.post('/signup', function (req,res){
