@@ -17,7 +17,43 @@ const routes = (app) => {
 
     app.get('/products', (req, res)=> res.render('products'));
 
+    app.get('/', function(req,res) {
+        res.sendFile(path.join(__dirname + "/Views/index.html"));
+    });
+    app.get('/login', function(req,res) {
+        res.sendFile(path.join(__dirname + '/Views/login.html'));
+    });
+    app.get('/logout', function(req,res){
+        req.logout();
+        console.log("Logged out.");
+        res.redirect('/');
+    })
+    app.get('/profile', function(req,res) {
+        res.sendFile(path.join(__dirname + '/Views/profile.html'));
+    });
+    app.get('/products', (req, res)=> res.render('products.ejs'));
     app.get('/addProduct', (req, res) => res.render('addProduct'));
+    app.post('/addProduct', function(req, res){// currently working
+        upload(req,res,(err) =>{
+            if(err){
+                res.render ('addProduct', {
+                    msg: err
+                });
+            }else {
+                console.log(req.file);
+                //req.file.toString();
+                if (req.file == undefined){
+                    res.render('addProduct',{msg: 'Error: no file selected'});
+                }
+                else{
+                    res.render('products', {
+                        msg:'File uploaded!',
+                        file: `images/${req.file.filename}`
+                    });
+                }
+            } 
+        })
+    })
     /*app.get('/products', function(req,res) {
         res.sendFile(path.join(__dirname + '/Views/products.html'));
     });*/
@@ -84,6 +120,9 @@ const routes = (app) => {
             }
             else{
                 req.logIn(user, function(err){
+                    res.locals.login = req.isAuthenticated();
+                    console.log(user.username, user.password);
+                    console.log("user has logged in");
                     return res.redirect('/');
                 });
             }
