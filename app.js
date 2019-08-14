@@ -1,7 +1,6 @@
 const http = require("http");
 const routes = require('./routes');
 const express = require("express");
-const session = require("express-session");
 const app = express();
 const path = require('path');
 const fs = require('fs');
@@ -14,16 +13,56 @@ const passport = require("passport");
 const config = require("./Config/database");
 const ejs = require("ejs");
 const multer = require("multer");
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require("express-session");
 
 // Passport config
 require('./Config/passport-setup')(passport)
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(function(req,res,next){
-    res.locals.login = req.isAuthenticated();
-    next();
+app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true
+    })
+  );
+  app.get('*', function(req, res, next){
+    //testong
+  app.locals.user = req.user;
+  next();
 });
+app.use(flash());
+// Global variables
+/*app.use(function(req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+  });*/
+
+  
+  
+// Express Validator Middleware
+app.use(expressValidator({
+errorFormatter: function(param, msg, value) {
+    var namespace = param.split('.')
+    , root    = namespace.shift()
+    , formParam = root;
+
+    while(namespace.length) {
+    formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+    param : formParam,
+    msg   : msg,
+    value : value
+    };
+}
+}));
+
 
 
 

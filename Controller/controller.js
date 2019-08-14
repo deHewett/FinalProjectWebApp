@@ -12,7 +12,7 @@ const signUpUser = (req, res, next) =>{
 };
 
 const loginInfo = (req, res) => {
-    Signup.find({email: req.body.email})
+    signUp.find({email: req.body.email})
           .exec()
           .then( user => {
             if(user.length <1){

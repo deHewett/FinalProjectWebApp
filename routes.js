@@ -9,11 +9,19 @@ const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 
 const routes = (app) => {
-    app.get('/', (req,res) => res.render('index'));
+
+    
+    app.get('/', function(req,res) {
+        console.log("THIS IS THE GLOBAL VARIABLE AFTER REDIRECT");
+        console.log(res.locals.user);
+        res.render('index')});
 
     app.get('/login', (req,res) => res.render('login'));
 
-    app.get('/profile', (req,res) => res.render('profile'));
+    app.get('/profile', function(req,res) {
+        
+        console.log(app.locals.user);
+        res.render('profile')});
 
     app.get('/products', (req, res)=> res.render('products'));
 
@@ -108,7 +116,7 @@ const routes = (app) => {
     })
 
     //loging page post request
-
+/*
     app.post('/loginUser', function(req, res, next){
         passport.authenticate('local',function(err, user, info){
             if(err) { 
@@ -119,9 +127,12 @@ const routes = (app) => {
                 return res.redirect('/login');
             }
             else{
-                req.logIn(user, function(err){
-                    res.locals.login = req.isAuthenticated();
-                    console.log(user.username, user.password);
+                req.login(user, function(err){
+                    if(err) { return next(err);}
+                    console.log(req.user);
+                    console.log(global.user);
+                    res.locals.user = req.user;
+                    console.log(res.locals.user);
                     console.log("user has logged in");
                     return res.redirect('/');
                 });
@@ -129,14 +140,41 @@ const routes = (app) => {
         })(req,res,next);
         
     })
-    /*app.post('/loginUser', function(req,res, next){
-        passport.authenticate('local',{
-            successRedirect:"/",
-            failureRedirect:"/login",
-            failureFlash: true
+    app.post('/loginUser', (req, res, next) => {
+        passport.authenticate('local'), function(req,res){
+            console.log(req.user);
+            res.redirect('/');
+        }
+       // res.locals.user = req.user;
+    )});*/
+
+    app.post('/loginUser', function(req,res,next){
+        passport.authenticate('local', function(err, user, info){
+            if(err) {
+                return next(err);
+            }
+            if(!user){ 
+                return res.redirect('/login');
+            }
+            req.logIn(user, {session:false }, function(err){
+                if(err) {return next(err)};
+                console.log(req.user);
+                app.locals.user = req.user;
+                console.log(app.locals.user);
+                return res.redirect('/'); 
+            });
         })(req,res,next);
-        console.log("user is logged in");
-    })*/
-}
+    });
+}/*
+    passport.authenticate('local'),
+    function(req, res) {
+        console.log("THIS IS THE REQ.USER");
+        console.log(req.user);
+        app.locals.user = req.user;
+        console.log("THIS IS THE GLOBAL VARIABLE");
+        console.log(app.locals.user);
+        res.redirect('/');
+    });
+    })(req,res,next);*/
 
 module.exports = routes;
