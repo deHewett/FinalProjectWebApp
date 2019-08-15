@@ -2,7 +2,15 @@ const mongoose = require('mongoose');
 
 //adiing product schema
 
-export const ProductSchema = mongoose.Schema({
+export const ProductSchema = new mongoose.Schema({
+    Image:{
+        type: String,
+        required: true,
+    },
+    Name:{
+        type: String,
+        required: true,
+    },
     Price:{
         type: String,
         required: true,
@@ -11,8 +19,6 @@ export const ProductSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    Image:{
-        type: String,
-        required: true,
-    }
-})
+    
+}); 
+const Product = mongoose.model("Products", ProductSchema);

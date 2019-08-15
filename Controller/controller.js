@@ -7,6 +7,7 @@ const User = mongoose.model('user', models.userSchema);
 
 const signUp = mongoose.model('signUp', models.SignUpSchema);
 
+
 const signUpUser = (req, res, next) =>{   
     
 };
@@ -46,7 +47,7 @@ const loginInfo = (req, res) => {
     )};
 
 
-const Product = mongoose.model('product', models.productSchema);
+//const Product = mongoose.model('product', models.productSchema);
 module.exports = {
     signUpUser, loginInfo
 }

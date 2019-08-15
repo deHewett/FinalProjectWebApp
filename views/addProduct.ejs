@@ -21,27 +21,27 @@
 
 </header>
 <body>
-    <div>
+    <div style="text-align: center"> 
         <h1> Add product</h1>
-        <form action="/addProduct" method="POST" enctype="multipart/form-data">
+        <form action="/addProduct" method="post" enctype="multipart/form-data">
             <%= typeof msg != 'undefined' ? msg : '' %> 
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>Upload file</span>
-                    <input name="myImage" type="file" multiple>
-                </div>
-               <div class="file-path-wrapper">
-                    <input class="file-path-validate" type="text">
-                </div>
-            </div>
-            <input name="price" type="text">Price</input>
+           <!-- <div class="file-field input-field">-->
+          <!--  <label>Upload file:</label>
+            <input name="image" type="text" >
+            <br>-->
+            <label>Name:</label>
+            <input name="name" type="text"/>
             <br>
-            <input name="description" type="text">Description</input>
+            <label>Price:</label>
+            <input name="price" type="text"/>
             <br>
-            <button type="submit" class="btn" > Submit</button>
+            <label>Description:</label>
+            <input name="description" type="text"/>
+            <br>
+            <input type="submit" >
         </form>
         <br>
-        <img class="lead" src="<%= typeof file != 'undefined' ? file : '' %>" alt="Recycle bag">
+       <!--<img class="lead" src="<%= typeof file != 'undefined' ? file : '' %>" alt="Recycle bag">--> 
     </div>
 
     <footer>
