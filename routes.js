@@ -9,6 +9,8 @@ const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 const multer = require("multer");
 
+const product = mongoose.model( "Products", models.ProductSchema);
+
 
 
 const routes = (app) => {
@@ -25,7 +27,20 @@ const routes = (app) => {
         console.log(app.locals.user);
         res.render('profile')});
 
-    app.get('/products', (req, res)=> res.render('products'));
+    app.get('/products', function (req, res){
+        product.find(function(err, products){
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                res.render('products', {products: products});
+                console.log(products);
+            }
+        })
+    }
+    );
 
     app.get('/addProduct', (req, res) => res.render('addProduct'));
     /*app.get('/products', function(req,res) {
@@ -119,9 +134,22 @@ const routes = (app) => {
         console.log("user is logged in");
     })*/
 
+    
+    app.post('/addProduct', function(req, res){
+
+        console.log(req.body);
+        let NewProduct= new product({
+           _id: new mongoose.Types.ObjectId(),
+            image:req.body.image,
+            name: req.body.name,
+            price:  req.body.price,
+            description: req.body.description,
+           
+        }) 
+
     //all function for uploading images and checking file
     //checking file type
-    /*function checkFileType(file, cb){
+    function checkFileType(file, cb){
         //allowed extension
         const filetypes = /jpeg|jpg|png|gif/;
         //check ext
@@ -129,11 +157,11 @@ const routes = (app) => {
     // check mime
     const mimeType = filetypes.test(file.mimetype);
 
-    if (mimeType && extName){
-        return cb(null, true);
-    }else{
-        cb('Error: images only!');
-    }}
+        if (mimeType && extName){
+            return cb(null, true);
+        }else{
+            cb('Error: images only!');
+        }};
 
     const storage = multer.diskStorage({
         destination: './Public/images/',
@@ -142,48 +170,21 @@ const routes = (app) => {
         }
     });
     const upload = multer({
-       // storage:storage,
+        storage:storage,
         limits: {fileSize: 10000000},
         fileFilter: function(req, file, cb){
             checkFileType(file, cb);
         }
-    }).single('image');*/
+    }).single('image');
     //going inside the post function
         // currently working
-                /*upload(req,res,(err) =>{
-                    if(err){
-                        res.render ('addProduct', {
-                            msg: err
-                        });
-                    }else {
-                        console.log(req.file);
-                        //req.file.toString();
-                        if (req.file == undefined){
-                            res.render('addProduct',{msg: 'Error: no file selected'});
-                        }
-                        else{
-                            res.render('products'
-                            , {
-                                msg:'File uploaded!',
-                                file: `images/${req.file.filename}`
-                            });
-                        }
-                    } 
-                })*/
-    app.post('/addProduct', function(req, res){
-       
-       const product = mongoose.model( "Products", models.ProductSchema);
-                     console.log(req.body);
-                let NewProduct= new product({
-                   _id: new mongoose.Types.ObjectId(),
-                //   image:req.body.image,
-                    name: req.body.name,
-                    price:  req.body.price,
-                    description: req.body.description,
-                   
-                }) 
-                
-            NewProduct.save(function(err)
+        upload(req,res,(err) =>{
+            if(err){
+                res.render ('addProduct', {
+                    msg: err
+                });
+            }else {
+                NewProduct.save(function(err)
                 {
                     if(err){
                         console.log(err);
@@ -192,6 +193,25 @@ const routes = (app) => {
                     res.redirect('/products');
                 }
                 })
+               /*   console.log(req.file);
+                //req.file.toString();
+                if (req.file == undefined){
+                    res.render('addProduct',{msg: 'Error: no file selected'});
+                }
+                else{
+                  res.render('products'
+                    , {
+                        msg:'File uploaded!',
+                        file: `images/${req.file.filename}`
+                    });
+                }*/
+            } 
+        });
+       
+       //const product = mongoose.model( "Products", models.ProductSchema);
+               
+                
+           
     })
 }
 

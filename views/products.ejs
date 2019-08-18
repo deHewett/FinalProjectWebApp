@@ -41,7 +41,20 @@
                     <a onclick="">Recycle bag</a>
                 </div>
                 <div class= "two row">
+
+                        
+                    <% products.forEach(product => { %>
                         <div class="column">
+                             <div class="shop-row shop-row--1">  
+                                <img data-lazy="<%= product.image %>" class="cover-img">
+                            </div> 
+                                <p><%= product.name %></p>
+                                <h3>&dollar;<%= product.price %></h3>
+                             <!---  <p><%= product.description %></p>-->
+                        </div>
+                   <% }); %>
+                    
+                      <!--   <div class="column">
                             <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
                             <p> $ 10</p>
                             <button id="buy">Add to cart</button>
@@ -75,7 +88,7 @@
                             <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
                             <p> $ 10</p>
                             <button id="buy">Add to cart</button>
-                        </div>   
+                        </div>   -->
                         
                 </div>
             </section>

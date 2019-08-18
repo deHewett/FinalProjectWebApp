@@ -15,6 +15,7 @@ const ejs = require("ejs");
 const multer = require("multer");
 const flash = require('connect-flash');
 const session = require("express-session");
+const ejsLint = require('ejs-lint');
 
 // Passport config
 require('./Config/passport-setup')(passport)
@@ -26,12 +27,17 @@ app.use(session({
     saveUninitialized: true
 }));
 app.use(flash());
+//ejsLint(ejs, ejs); 
+
+//var url = "mongodb://localhost:27017/greenworld";
 
 
 //setting ejs
 app.set('view engine', 'ejs');
 //database connection
-mongoose.connect(config.database)
+mongoose.connect(config.database, {
+    useNewUrlParser: true
+});
 let db = mongoose.connection;
 
 db.once('open', function(){
