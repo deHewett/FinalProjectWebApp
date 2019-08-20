@@ -28,6 +28,7 @@ const routes = (app) => {
         res.render('profile')});
 
     app.get('/products', function (req, res){
+      
         product.find(function(err, products){
             if(err)
             {
@@ -36,11 +37,24 @@ const routes = (app) => {
             else
             {
                 res.render('products', {products: products});
-                console.log(products);
+               // console.log(products);
             }
         })
-    }
-    );
+    });
+
+    app.get('/products/:productId', function(req, res){
+       product.find(function(err, products){
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                res.render('productId', {products: products});
+               // console.log(products);
+            }
+        })
+    });
 
     app.get('/addProduct', (req, res) => res.render('addProduct'));
     /*app.get('/products', function(req,res) {
@@ -133,86 +147,70 @@ const routes = (app) => {
         })(req,res,next);
         console.log("user is logged in");
     })*/
-
+    
     
     app.post('/addProduct', function(req, res){
 
-        console.log(req.body);
-        let NewProduct= new product({
+        //console.log(req.body);
+      /*  let NewProduct= new product({
            _id: new mongoose.Types.ObjectId(),
             image:req.body.image,
             name: req.body.name,
             price:  req.body.price,
             description: req.body.description,
+            category: req.body.category,
            
-        }) 
-
-    //all function for uploading images and checking file
-    //checking file type
-    function checkFileType(file, cb){
-        //allowed extension
-        const filetypes = /jpeg|jpg|png|gif/;
-        //check ext
-        const extName = filetypes.test(path.extname(file.originalname).toLowerCase());
-    // check mime
-    const mimeType = filetypes.test(file.mimetype);
-
-        if (mimeType && extName){
-            return cb(null, true);
-        }else{
-            cb('Error: images only!');
-        }};
-
-    const storage = multer.diskStorage({
+        }); 
+        NewProduct.save(function(err)
+        {
+            if(err){
+                console.log(err);
+                res.render('addProduct')
+            }else{
+            res.redirect('/products');
+        }
+        });*/
+        upload(req,res,(err)=>{
+           
+            if(err){
+                res.render('addproduct',{
+                    mesg: err
+                });
+            }
+                new product({
+                    _id: new mongoose.Types.ObjectId(),
+                     image:req.body.image,
+                     name: req.body.name,
+                     price:  req.body.price,
+                     description: req.body.description,
+                     category: req.body.category,
+                 }).save(function(err)
+                 {
+                     if(err){
+                         console.log(err);
+                         res.render('addProduct')
+                     }else{
+                     res.redirect('/products');
+                 }
+                 })
+            });
+        })
+        //all function for uploading images and checking file
+    //storage engine
+    const storage= multer.diskStorage({
         destination: './Public/images/',
         filename: function(req, file, cb){
-            cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-        }
+            cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        }   
     });
+    //upload method
     const upload = multer({
-        storage:storage,
-        limits: {fileSize: 10000000},
-        fileFilter: function(req, file, cb){
-            checkFileType(file, cb);
-        }
+        storage: storage
     }).single('image');
-    //going inside the post function
-        // currently working
-        upload(req,res,(err) =>{
-            if(err){
-                res.render ('addProduct', {
-                    msg: err
-                });
-            }else {
-                NewProduct.save(function(err)
-                {
-                    if(err){
-                        console.log(err);
-                        res.render('addProduct')
-                    }else{
-                    res.redirect('/products');
-                }
-                })
-               /*   console.log(req.file);
-                //req.file.toString();
-                if (req.file == undefined){
-                    res.render('addProduct',{msg: 'Error: no file selected'});
-                }
-                else{
-                  res.render('products'
-                    , {
-                        msg:'File uploaded!',
-                        file: `images/${req.file.filename}`
-                    });
-                }*/
-            } 
-        });
+};
+
        
        //const product = mongoose.model( "Products", models.ProductSchema);
                
-                
-           
-    })
-}
 
 module.exports = routes;

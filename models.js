@@ -79,10 +79,10 @@ const SignUpSchema = new Schema({
 
 var ProductSchema = new Schema({
    
-    image:{
+    /*image:{
         type:String,
         required: 'Upload an image',
-    },
+    },*/
     name:{
         type: String,
         required: 'Enter the name of the product',
@@ -93,8 +93,13 @@ var ProductSchema = new Schema({
     },
     description:{
         type: String,
-        required: 'Enter a description of the product'
+        required: 'Enter description of the product'
+    },
+    category:{
+        type: String,
+        required: 'Enter a category of the product'
     }
+
 }); 
 module.exports = mongoose.model('products', ProductSchema);
 

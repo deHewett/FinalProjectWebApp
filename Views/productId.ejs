@@ -21,16 +21,6 @@
     </header>
     <body>
         <div id="container">
-            <h1>This is all the products!</h1>
-            <hr>
-        <!--<div>
-                <h3>Select Category:</h3>
-                <form action="">
-                    <input type="checkbox" name="Straw" value="Straw"> Straw<br>
-                    <input type="checkbox" name="Recycle Bags" value="Bags"> Bags<br>
-                    <input type="checkbox" name="Bottles" value="Bottles" checked> Boottles<br><br>
-                </form>
-            </div>--> 
             <section class="container">
                 <div class="one">
                     <h3>Select a category</h3>
@@ -40,21 +30,16 @@
                     <br>
                     <a onclick="">Recycle bag</a>
                 </div>
-                <div class= "two row" onclick="location.href='/products/:productId'">  
-                    <% products.forEach(product => { %>
+                <div class= "two row">
+                    <%= if(products)=> { %>
                         <div class="column">
                             <img src="" class="cover-img">
-                                <p><%= product.name %></p>
-                                <h3>&dollar;<%= product.price %></h3>
-                             <a action="/products/productId"></a><button class="btn">Add to cart</button></a>
+                                <p><%= products.name %></p>
+                                <h3>&dollar;<%= products.price %></h3>
                              <!---  <p><%= product.description %></p>-->
                         </div>
-                   <% }); %>
-                     <!--   <div class="column">
-                            <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                            <p> $ 10</p>
-                            <button id="buy">Add to cart</button>
-                        </div>   -->
+                   <% }; %>
+                    
                         
                 </div>
             </section>

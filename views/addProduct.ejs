@@ -23,11 +23,14 @@
 <body>
     <div style="text-align: center"> 
         <h1> Add product</h1>
-        <form action="/addProduct" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="/addProduct" method="post" enctype="multipart/form-data">
             <%= typeof msg != 'undefined' ? msg : '' %> 
             <div class="file-field input-field">
-            <label>Upload file:</label>
-            <input name="image" type="file" >
+                <label>Upload file:</label>
+                <input name="image" type="file" >
+            </div>
+           <!-- <form action="/addProduct" method="post"  enctype="application/x-www-form-urlencoded">
+            </form >-->
             <br>
             <label>Name:</label>
             <input name="name" type="text"/>
@@ -37,6 +40,9 @@
             <br>
             <label>Description:</label>
             <input name="description" type="text"/>
+            <br>
+            <label>Category</label>
+            <input name="category" type="text"/>
             <br>
             <input type="submit" >
         </form>
