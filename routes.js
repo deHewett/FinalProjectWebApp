@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 const multer = require("multer");
 
-const product = mongoose.model( "Products", models.ProductSchema);
+const Product = mongoose.model( "Products", models.ProductSchema);
 
 
 
@@ -29,31 +29,36 @@ const routes = (app) => {
 
     app.get('/products', function (req, res){
       
-        product.find(function(err, products){
+        Product.find(function(err, products){
             if(err)
             {
                 console.log(err);
             }
             else
             {
+               // console.log(products);
                 res.render('products', {products: products});
                // console.log(products);
             }
         })
     });
 
-    app.get('/products/:productId', function(req, res){
-       product.find(function(err, products){
-            if(err)
-            {
-                console.log(err);
+    app.get('/products/:id', async function(req, res){
+        console.log(req.params.id);
+        var tempProduct = await Product.findById(req.params.id);
+        console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
+        Product.findById(req.params.id, function(err, product)
+        {
+            if (err){
+               // res.send(err);
+             console.log("this is the error: " + err)
+            }else{
+                console.log("this is the product: " + product);
+                 res.render('productId',{products: product});
             }
-            else
-            {
-                res.render('productId', {products: products});
-               // console.log(products);
-            }
-        })
+            
+        });
+       
     });
 
     app.get('/addProduct', (req, res) => res.render('addProduct'));
@@ -177,7 +182,7 @@ const routes = (app) => {
                     mesg: err
                 });
             }
-                new product({
+                new Product({
                     _id: new mongoose.Types.ObjectId(),
                      image:req.body.image,
                      name: req.body.name,

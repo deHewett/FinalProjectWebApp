@@ -40,21 +40,21 @@
                     <br>
                     <a onclick="">Recycle bag</a>
                 </div>
-                <div class= "two row" onclick="location.href='/products/:productId'">  
-                    <% products.forEach(product => { %>
-                        <div class="column">
-                            <img src="" class="cover-img">
-                                <p><%= product.name %></p>
-                                <h3>&dollar;<%= product.price %></h3>
-                             <a action="/products/productId"></a><button class="btn">Add to cart</button></a>
-                             <!---  <p><%= product.description %></p>-->
-                        </div>
-                   <% }); %>
-                     <!--   <div class="column">
-                            <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                            <p> $ 10</p>
-                            <button id="buy">Add to cart</button>
-                        </div>   -->
+                <div class= "two row" > <!-- onclick="location.href='/products/:id'"-->
+                    <% if(products.length>0){ %>
+                        <% for (var i=0; i<products.length; i++) { %>
+                                <div class="column">
+                                        <img src="" class="cover-img">
+                                            <p><%= products[i].name %></p>
+                                            <h3>&dollar;<%= products[i].price %></h3>
+                                         <a href='/products/<%= products[i].id %>'>Add to cart</a>
+                                       
+                                    </div>
+                            <% }%>
+                    <% } else { %>
+                        no record found
+                        <% } %>
+                   
                         
                 </div>
             </section>
