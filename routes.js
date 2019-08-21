@@ -73,7 +73,7 @@ const routes = (app) => {
             }
             else
             {
-               // console.log(products);
+                console.log(products);
                 res.render('products', {products: products, user: req.session.passport || undefined});
                // console.log(products);
             }
@@ -101,7 +101,10 @@ const routes = (app) => {
 
     app.get('/addProduct', (req, res) => res.render('addProduct', { user: req.session.passport || undefined }));
 
+    // multer function 
+   
     app.post('/addProduct', function(req, res){// currently working
+
         upload(req,res,(err) =>{
             if(err){
                 res.render ('addProduct', {
@@ -114,15 +117,57 @@ const routes = (app) => {
                     res.render('addProduct',{msg: 'Error: no file selected'});
                 }
                 else{
-                    res.render('products', {
+                    new Product({
+                        name: req.body.name,
+                        price: req.body.price,
+                        description: req.body.description,
+                        category:req.body.category
+                    }).save(function(err){
+                        if (err){
+                            throw(err)
+                        }else{
+                            res.redirect('/products');
+                           
+                        }
+                    })
+                   // res.redirect('/products');
+                    /*{
                         msg:'File uploaded!',
                         file: `images/${req.file.filename}`,
-                        user: req.session.passport || undefined
-                    });
+                }*/
                 }
             } 
         })
     });
+
+         
+    const storage = multer.diskStorage({
+        destination : './Public/images/',
+        filename: function(req, file,cb){
+           cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
+        }
+    })
+    const upload = multer ({
+        storage: storage,
+        fileFilter: function(req, file, cb){
+            checkFileType(file,cb);
+        }
+    }).single('image');
+
+    function checkFileType(file, cb){
+        //allowed ext
+        const filetypes = /jpeg|jpg|png|gif/;
+        //check ext
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        //check mime
+        const mimetype = filetypes.test(file.mimetype);
+
+        if(mimetype && extname){
+            return cb(null, true);
+        } else{
+            cb('Error: images only');
+        }
+    };
 
     // END PRODUCT ROUTES
 
