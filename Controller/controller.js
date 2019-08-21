@@ -45,7 +45,7 @@ const signUpUser = (req, res) =>{
                     console.log(err);
                     return;
                 }else{
-                    return res.redirect('/profile'); //{user: newUser},
+                   res.redirect('/'); //{user: newUser},
                 }
             })
         })
