@@ -6,7 +6,19 @@ const mongoose = require("mongoose");
 const models = require('./models');
 const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
+const multer = require("multer");
+
+const Product = mongoose.model( "Products", models.ProductSchema);
+
+
+
 const routes = (app) => {
+    app.get('*', function(req,res,next){
+        app.locals.user = req.user;
+        next();
+    
+    })
+    app.get('/', (req,res) => res.render('index'));
 
     var editing = false;
 
@@ -75,6 +87,40 @@ const routes = (app) => {
             } 
         })
     })
+
+    app.get('/products', function (req, res){
+      
+        Product.find(function(err, products){
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+               // console.log(products);
+                res.render('products', {products: products});
+               // console.log(products);
+            }
+        })
+    });
+
+    app.get('/products/:id', async function(req, res){
+        console.log(req.params.id);
+        var tempProduct = await Product.findById(req.params.id);
+        console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
+        Product.findById(req.params.id, function(err, product)
+        {
+            if (err){
+               // res.send(err);
+             console.log("this is the error: " + err)
+            }else{
+                console.log("this is the product: " + product);
+                 res.render('productId',{products: product});
+            }
+            
+        });
+       
+    });
 
     app.get('/cart', (req,res)=> res.render('cart', { user: req.session.passport || undefined }));
     

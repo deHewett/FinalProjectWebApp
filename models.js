@@ -78,25 +78,33 @@ const SignUpSchema = new Schema({
     },
 });
 
-const productSchema = new Schema({
-    productID:{
+var ProductSchema = new Schema({
+   
+    /*image:{
+        type:String,
+        required: 'Upload an image',
+    },*/
+    name:{
+        type: String,
+        required: 'Enter the name of the product',
+    },
+    price:{
         type: Number,
-        required:false,
+        required: 'Enter the price of the product',
     },
-    productName:{
+    description:{
         type: String,
-        required:true,
+        required: 'Enter description of the product'
     },
-    productPrice:{
+    category:{
         type: String,
-        required:true,
-    },
-    productDescription:{
-        type: String,
-        required:true,
-    },
-})
+        required: 'Enter a category of the product'
+    }
+
+}); 
+module.exports = mongoose.model('products', ProductSchema);
+
 
 module.exports = {
-    productSchema, SignUpSchema, userSchema
+    ProductSchema, SignUpSchema, userSchema
 }

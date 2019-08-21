@@ -110,7 +110,7 @@ const saveProfile = async (req,res)=>{
     return 1;
 };
 
-const Product = mongoose.model('product', models.productSchema);
+//const Product = mongoose.model('product', models.productSchema);
 module.exports = {
     signUpUser, login, activeUser, saveProfile
 }
