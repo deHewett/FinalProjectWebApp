@@ -44,10 +44,10 @@
                     <% if(products.length>0){ %>
                         <% for (var i=0; i<products.length; i++) { %>
                                 <div class="column">
-                                        <img src="" class="cover-img">
+                                        <img src='<%= products[i].image %>' class="cover-img">
                                             <p><%= products[i].name %></p>
                                             <h3>&dollar;<%= products[i].price %></h3>
-                                         <a href='/products/<%= products[i].id %>'>Add to cart</a>
+                                         <a href='/products/<%= products[i].id %>'><button class="btn">View product</button></a>
                                        
                                     </div>
                             <% }%>
