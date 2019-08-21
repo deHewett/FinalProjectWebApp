@@ -1,29 +1,41 @@
 const controller = require('./Controller/controller');
 const express = require("express");
-const appServer = require('./app');
-const app = appServer.app;
+const app = require('./app');
 const path = require("path");
 const mongoose = require("mongoose");
 const models = require('./models');
 const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
-
 const routes = (app) => {
 
+    var editing = false;
+
     
-    app.get('/', function(req,res) {
-        console.log("THIS IS THE GLOBAL VARIABLE AFTER REDIRECT");
-        console.log(res.locals.user);
-        res.render('index')});
+    app.get('/', (req,res) => { 
+        console.log(req.session);
+        res.render('index', { user: req.session.passport || undefined }) 
+    });
 
-    app.get('/login', (req,res) => res.render('login'));
+    app.get('/login', (req,res) => res.render('login', { user: req.session.passport || undefined }));
 
-    app.get('/profile', function(req,res) {
+    app.get('/profile', async function(req,res) {
+        let activeUser = await controller.activeUser(req, res);
+        console.log("AFTER REDIRECT: " + activeUser)
+        res.render('profile', { user: req.session.passport || undefined , loggedUser: activeUser, editProfile: editing});
+    })
+    app.get('/profile/edit', async function(req,res) {
+        editing = true;
+        res.redirect('/profile');
+    })
+    app.post('/profile', async function(req,res){
+        editing = false;
+        let saveFile = await controller.saveProfile(req,res);
+        console.log(saveFile);
+        if(saveFile == 1){res.redirect("/");}
+        else { console.log("some error message")};
         
-        console.log(app.locals.user);
-        res.render('profile')});
-
-    app.get('/products', (req, res)=> res.render('products'));
+    })
+    app.get('/products', (req, res)=> res.render('products', { user: req.session.passport || undefined }));
 
     app.get('/', function(req,res) {
         res.sendFile(path.join(__dirname + "/Views/index.html"));
@@ -33,14 +45,14 @@ const routes = (app) => {
     });
     app.get('/logout', function(req,res){
         req.logout();
-        console.log("Logged out.");
+        req.session.destroy();
         res.redirect('/');
     })
     app.get('/profile', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/profile.html'));
+        res.render('profile.ejs,', { user: req.session.passport || undefined }, controller.activeUser);
     });
-    app.get('/products', (req, res)=> res.render('products.ejs'));
-    app.get('/addProduct', (req, res) => res.render('addProduct'));
+    app.get('/products', (req, res)=> res.render('products.ejs', { user: req.session.passport || undefined }));
+    app.get('/addProduct', (req, res) => res.render('addProduct', { user: req.session.passport || undefined }));
     app.post('/addProduct', function(req, res){// currently working
         upload(req,res,(err) =>{
             if(err){
@@ -56,125 +68,27 @@ const routes = (app) => {
                 else{
                     res.render('products', {
                         msg:'File uploaded!',
-                        file: `images/${req.file.filename}`
+                        file: `images/${req.file.filename}`,
+                        user: req.session.passport || undefined
                     });
                 }
             } 
         })
     })
-    /*app.get('/products', function(req,res) {
-        res.sendFile(path.join(__dirname + '/Views/products.html'));
-    });*/
-    app.get('/cart', (req,res)=> res.render('cart'));
+
+    app.get('/cart', (req,res)=> res.render('cart', { user: req.session.passport || undefined }));
     
-    app.get('/contact', (req,res)=> res.render('contact'));
+    app.get('/contact', (req,res)=> res.render('contact', { user: req.session.passport || undefined }));
     
-    app.get('/staff', (req,res) => res.render('staff'));
+    app.get('/staff', (req,res) => res.render('staff', { user: req.session.passport || undefined }));
     
 
     //signup page post request
-    app.post('/signup', function (req,res){
-        const user = mongoose.model('signUp', models.SignUpSchema,"Users");
-        const newUsername = req.body.username;
-        const newPassword = req.body.password;
-        const newFullName = req.body.fullName;
-        const newEmail = req.body.email;
-        const newContactNumber = req.body.contactNumber;
-        const newBillingAddress = req.body.billingAddress;
-        const newDeliveryAddress = req.body.deliveryAddress;
-        const newUserType = "User";
-
-        let newUser = new user({
-            _id: new mongoose.Types.ObjectId(),
-            username: newUsername,
-            password: newPassword,
-            userType: newUserType,
-            fullName: newFullName,
-            email: newFullName,
-            contactNumber: newContactNumber,
-            billingAddress: newBillingAddress,
-            deliveryAddress: newDeliveryAddress,
-        })
-        
-        bcrypt.genSalt(10,function(err, salt){
-            bcrypt.hash(newUser.password, salt,null, function(err, hash){
-                if(err){
-                    console.log(err);
-                }
-                newUser.password = hash;
-                console.log(newUser);
-                newUser.save(function(err){
-                    if(err){
-                        console.log(err);
-                        return;
-                    }else{
-                        res.redirect('/profile');
-                    }
-                })
-            })
-        });
-    })
+    app.post('/signup', controller.signUpUser);
 
     //loging page post request
-/*
-    app.post('/loginUser', function(req, res, next){
-        passport.authenticate('local',function(err, user, info){
-            if(err) { 
-                console.log(err);
-                return next(err)
-            }
-            if(!user) {
-                return res.redirect('/login');
-            }
-            else{
-                req.login(user, function(err){
-                    if(err) { return next(err);}
-                    console.log(req.user);
-                    console.log(global.user);
-                    res.locals.user = req.user;
-                    console.log(res.locals.user);
-                    console.log("user has logged in");
-                    return res.redirect('/');
-                });
-            }
-        })(req,res,next);
-        
-    })
-    app.post('/loginUser', (req, res, next) => {
-        passport.authenticate('local'), function(req,res){
-            console.log(req.user);
-            res.redirect('/');
-        }
-       // res.locals.user = req.user;
-    )});*/
 
-    app.post('/loginUser', function(req,res,next){
-        passport.authenticate('local', function(err, user, info){
-            if(err) {
-                return next(err);
-            }
-            if(!user){ 
-                return res.redirect('/login');
-            }
-            req.logIn(user, {session:false }, function(err){
-                if(err) {return next(err)};
-                console.log(req.user);
-                app.locals.user = req.user;
-                console.log(app.locals.user);
-                return res.redirect('/'); 
-            });
-        })(req,res,next);
-    });
-}/*
-    passport.authenticate('local'),
-    function(req, res) {
-        console.log("THIS IS THE REQ.USER");
-        console.log(req.user);
-        app.locals.user = req.user;
-        console.log("THIS IS THE GLOBAL VARIABLE");
-        console.log(app.locals.user);
-        res.redirect('/');
-    });
-    })(req,res,next);*/
+    app.post('/loginUser', controller.login);
 
+}
 module.exports = routes;
