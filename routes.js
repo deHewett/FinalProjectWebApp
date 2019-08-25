@@ -73,17 +73,14 @@ const routes = (app) => {
             }
             else
             {
-                console.log(products);
+                //console.log(products);
                 res.render('products', {products: products, user: req.session.passport || undefined});
-               // console.log(products);
             }
         })
     });
 
     app.get('/products/:id', async function(req, res){
         console.log(req.params.id);
-        var tempProduct = await Product.findById(req.params.id);
-        console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
         Product.findById(req.params.id, function(err, product)
         {
             if (err){
@@ -96,6 +93,37 @@ const routes = (app) => {
             
         });
        
+    });
+    app.get('/editProduct/:id', async function(req, res){
+        Product.findById(req.params.id, function (err, product)
+        {
+            if(err){
+                console.log(err);
+            }
+            else 
+            {
+                res.render('editProduct', {products: product, user: req.session.passport || undefined});
+            }
+        })
+    });
+
+    app.post('/editProduct/:id', function(req,res){
+        console.log("my id is " + req.params.id);
+       const data = {
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+
+       }
+        Product.findByIdAndUpdate(req.params.id,data,  function(err){
+            if (err){
+                console.log(err);
+                res.redirect('/editProduct/' + req.params.id);
+            }
+            else{
+                res.redirect('/products')
+            }
+        })
     });
 
 
