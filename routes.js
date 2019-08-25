@@ -109,13 +109,13 @@ const routes = (app) => {
 
     app.post('/editProduct/:id', function(req,res){
         console.log("my id is " + req.params.id);
-       const data = {
+       const updatingData = {
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
 
        }
-        Product.findByIdAndUpdate(req.params.id,data,  function(err){
+        Product.findByIdAndUpdate(req.params.id, updatingData, function(err){
             if (err){
                 console.log(err);
                 res.redirect('/editProduct/' + req.params.id);
