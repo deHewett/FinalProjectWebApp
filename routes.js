@@ -7,6 +7,7 @@ const models = require('./models');
 const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 const multer = require("multer");
+const Cart = require ('./models').Cart;
 
 const Product = mongoose.model( "Products", models.ProductSchema);
 
@@ -199,7 +200,20 @@ const routes = (app) => {
 
     // END PRODUCT ROUTES
 
-    app.get('/cart', (req,res)=> res.render('cart', { user: req.session.passport || undefined }));
+    app.get('/cart/:id', function(req,res){
+        var productId = req.params.id;
+        var cart = new Cart(req.session.cart ? req.session.cart : {});    
+        Product.findById(productId, function(err, product){
+            if(err){
+                console.log(err);
+                return res.redirect('/');
+            }
+            cart.add(product, product.id);
+            req.session.cart = cart;
+            console.log(req.session.cart);
+            res.redirect('/products');
+        });
+    });
     
     app.get('/contact', (req,res)=> res.render('contact', { user: req.session.passport || undefined }));
     
