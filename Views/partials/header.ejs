@@ -11,7 +11,10 @@
     <li><a href="/contact">Contact us</a></li>
     <li><a href="/profile">Profile</a></li>
     <li><a href="/staff">Staff</a></li>
-    <li style="float:right"><a href="#">Shopping cart</a></li>
+    <li style="float:right"><a href="#">Shopping cart<span>
+      <% if(session.cart) { %>
+      <span class="badge"><%= session.cart.totalQty %></span>
+  <% } %></span></a></li>
     
       
 </ul>

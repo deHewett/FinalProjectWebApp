@@ -27,7 +27,13 @@ app.use(
       secret: 'secret',
       resave: true,
       saveUninitialized: true
-    })
+    }),
+    function(req,res,next)
+    {
+        res.locals.session = req.session;
+        next();
+    }
+    
   );
 app.use(flash());
 
