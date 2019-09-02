@@ -200,7 +200,7 @@ const routes = (app) => {
 
     // END PRODUCT ROUTES
 
-    app.get('/cart/:id', function(req,res){
+    app.get('/add-to-cart/:id', function(req,res){
         var productId = req.params.id;
         var cart = new Cart(req.session.cart ? req.session.cart : {});    
         Product.findById(productId, function(err, product){
@@ -213,6 +213,16 @@ const routes = (app) => {
             console.log(req.session.cart);
             res.redirect('/products');
         });
+    });
+
+    app.get('/cart', function(req,res){
+        if (!req.session.cart){
+            return res.render('cart', {products: null});
+        }
+        var cart = new Cart(req.session.cart);
+        res.render('cart', { products: cart.generateArray(), totalPrice: cart.totalPrice, name: cart.name, qty:cart.totalQty});
+
+
     });
     
     app.get('/contact', (req,res)=> res.render('contact', { user: req.session.passport || undefined }));
