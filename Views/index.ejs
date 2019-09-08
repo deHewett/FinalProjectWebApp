@@ -1,32 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="/js/carousel.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green World</title>
+    <% include ./partials/head %>
 </head>
 <header>
     <!--navigation bar-->
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/products">Products</a></li>
-        <% if(user != undefined){ %>
-            <li style="float:right"><a href="/logout">Log out</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <% if(userObject.userType == "Staff") { %>
-                <li><a href="/staff">Staff</a></li>
-            <% } %>
-          <% } else { %>  
-            <li style="float:right"><a href="/login">Sign in</a></li>
-          <% } %>
-        <li><a href="/contact">Contact us</a></li>
-        
-        
-    </ul>
+    <% include ./partials/header %>
 </header>
 <body>
     <div id="container">
@@ -257,11 +236,7 @@
         <br>
         <br>
         <footer>
-            <ul>
-                <li><a href=" ">Privacy Policy</a></li>
-                <li><a href=" ">Refund Policy</a></li>
-                <li><a href=" ">Contact Us</a></li>
-            </ul>
+            <% include ./partials/footer %>
         </footer>
     </div>
 </body>

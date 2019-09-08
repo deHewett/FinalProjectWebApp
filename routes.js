@@ -7,6 +7,7 @@ const models = require('./models');
 const bcrypt = require('bcrypt-nodejs');
 const passport = require("passport");
 const multer = require("multer");
+const Cart = require ('./models').Cart;
 
 const Product = mongoose.model( "Products", models.ProductSchema);
 
@@ -104,6 +105,37 @@ const routes = (app) => {
         });
        
     });
+    app.get('/editProduct/:id', async function(req, res){
+        Product.findById(req.params.id, function (err, product)
+        {
+            if(err){
+                console.log(err);
+            }
+            else 
+            {
+                res.render('editProduct', {products: product, user: req.session.passport || undefined});
+            }
+        })
+    });
+
+    app.post('/editProduct/:id', function(req,res){
+        console.log("my id is " + req.params.id);
+       const updatingData = {
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+
+       }
+        Product.findByIdAndUpdate(req.params.id, updatingData, function(err){
+            if (err){
+                console.log(err);
+                res.redirect('/editProduct/' + req.params.id);
+            }
+            else{
+                res.redirect('/products')
+            }
+        })
+    });
 
 
     app.get('/addProduct', async (req, res) => {
@@ -180,10 +212,30 @@ const routes = (app) => {
     };
 
     // END PRODUCT ROUTES
+    app.get('/add-to-cart/:id', function(req,res){
+        var productId = req.params.id;
+        var cart = new Cart(req.session.cart ? req.session.cart : {});    
+        Product.findById(productId, function(err, product){
+            if(err){
+                console.log(err);
+                return res.redirect('/');
+            }
+            cart.add(product, product.id);
+            req.session.cart = cart;
+            console.log(req.session.cart);
+            res.redirect('/products');
+        });
+    });
 
-    app.get('/cart', async (req,res)=> {
+    app.get('/cart', async function(req,res){
         activeUser = await controller.activeUser(req,res);
-        res.render('cart', { user: req.session.passport || undefined, userObject: activeUser || undefined})
+        if (!req.session.cart){
+            return res.render('cart', {products: null});
+        }
+        var cart = new Cart(req.session.cart);
+        res.render('cart', { user: req.session.passport || undefined, userObject: activeUser || undefined, products: cart.generateArray(), totalPrice: cart.totalPrice, name: cart.name, qty:cart.totalQty});
+
+
     });
     
     app.get('/contact', async (req,res)=> {

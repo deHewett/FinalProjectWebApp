@@ -1,32 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/css/main.css">
-    <title>Add product</title>
+    <% include ./partials/head %>
 </head>
 
 <header>
        <!--navigation bar-->
-       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/products">Products</a></li>
-        <% if(user != undefined){ %>
-            <li style="float:right"><a href="/logout">Log out</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <% if(userObject.userType == "Staff") { %>
-                <li><a href="/staff">Staff</a></li>
-            <% } %>
-          <% } else { %>  
-            <li style="float:right"><a href="/login">Sign in</a></li>
-          <% } %>
-        <li><a href="/contact">Contact us</a></li>
-        
-        
-    </ul>
-
+       <% include ./partials/header %>
 </header>
 <body>
     <div style="text-align: center"> 
@@ -59,11 +39,7 @@
     </div>
 
     <footer>
-            <ul>
-                <li><a href=" ">Privacy Policy</a></li>
-                <li><a href=" ">Refund Policy</a></li>
-                <li><a href=" ">Contact Us</a></li>
-            </ul>
+        <% include ./partials/footer %>
         </footer>
 </body>
 </html>
