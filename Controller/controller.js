@@ -2,16 +2,18 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt-nodejs");
 const passport = require("passport");
 const models = require('../models');
-const userModel = require("../Models/user");
 const app = require('../app');
 
-const user = mongoose.model('user', userModel.UserSchema, "Users");
+const user = mongoose.model('user', models.UserSchema, "Users");
+
+const staff = mongoose.model("staff", models.StaffSchema, "Users");
+
+const save = mongoose.model('saveProfile', models.SignUpSchema,"Users");
 
 const signUp = mongoose.model('signUp', models.SignUpSchema);
 
 const signUpUser = (req, res) =>{   
     
-    const user = mongoose.model('saveProfile', userModel.UserSchema,"Users");
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     const newFullName = req.body.fullName;
@@ -31,7 +33,7 @@ const signUpUser = (req, res) =>{
         contactNumber: newContactNumber,
         billingAddress: newBillingAddress,
         deliveryAddress: newDeliveryAddress,
-    })
+    });
     
     bcrypt.genSalt(10,function(err, salt){
         bcrypt.hash(newUser.password, salt,null, function(err, hash){
@@ -68,12 +70,18 @@ const login = (req,res,next)=>{
 }
 
 const activeUser = async (req,res) => {
-    let currUser = await user.findById(req.session.passport.user);
-    return currUser;
+    try{
+        let currUser = await user.findById(req.session.passport.user);
+        return currUser;
+        }
+    catch(err){
+        return;
+    }
+    
 }
 
 const saveProfile = async (req,res)=>{
-    const user = mongoose.model('signUp', models.SignUpSchema,"Users");
+    
     const newUsername = req.body.username;
     const newPassword = req.body.password;
     const confirmPassword = req.body.confirmPassword;
@@ -91,9 +99,9 @@ const saveProfile = async (req,res)=>{
                 console.log(err);
             }
             var query = req.session.passport.user
-            var oldDetails = await user.findById(query);
+            var oldDetails = await save.findById(query);
             console.log("THIS IS THE OLD DETAILS: " + oldDetails);
-            await user.updateOne(oldDetails, {username: oldDetails.username, 
+            await save.updateOne(oldDetails, {username: oldDetails.username, 
                 password: hash,
                 userType: oldDetails.userType,
                 fullName: newFullName, 
@@ -101,7 +109,7 @@ const saveProfile = async (req,res)=>{
                 contactNumber: newContactNumber,
                 billingAddress: newBillingAddress,
                 deliveryAddress: newDeliveryAddress});
-                var newDetails = await user.findById(query);
+                var newDetails = await save.findById(query);
             let tempUser = await activeUser(req,res);
             console.log("active user post update: " + tempUser);
         })
@@ -110,7 +118,14 @@ const saveProfile = async (req,res)=>{
     return 1;
 };
 
+
+const findStaffAccounts = async (req, res)=>{
+    staffFound = await staff.find({userType: "Staff"});
+    console.log(staffFound);
+    return staffFound;
+}
+
 //const Product = mongoose.model('product', models.productSchema);
 module.exports = {
-    signUpUser, login, activeUser, saveProfile
+    signUpUser, login, activeUser, saveProfile, findStaffAccounts
 }

@@ -6,6 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<header>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <% if(user != undefined){ %>
+            <li style="float:right"><a href="/logout">Log out</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <% if(userObject.userType == "Staff") { %>
+                <li><a href="/staff">Staff</a></li>
+            <% } %>
+          <% } else { %>  
+            <li style="float:right"><a href="/login">Sign in</a></li>
+          <% } %>
+        <li><a href="/contact">Contact us</a></li>
+        
+        
+    </ul>
+</header>
 <body>
     <h1>this is the contact page</h1>
 </body>

@@ -11,29 +11,35 @@ const multer = require("multer");
 const Product = mongoose.model( "Products", models.ProductSchema);
 
 var editing = false;
-
+var activeUser;
 
 
 const routes = (app) => {
 
     // HOME ROUTES
 
-    app.get('/', (req,res) => { 
+    app.get('/',async(req,res) => { 
         console.log(req.session);
-        res.render('index', { user: req.session.passport || undefined }) 
+        activeUser = await controller.activeUser(req,res);
+        res.render('index', { user: req.session.passport || undefined, userObject: activeUser || undefined});        
+        
     });
 
     // END HOME ROUTES
 
     // LOGIN / OUT ROUTES
 
-    app.get('/login', (req,res) => res.render('login', { user: req.session.passport || undefined }));
+    app.get('/login', (req,res) => {
+        activeUser = await controller.activeUser(req,res);
+        res.render('login', { user: req.session.passport || undefined, userObject: activeUser || undefined})
+    });
 
-    app.post('/loginUser', controller.login);
+    app.post('/loginUser', controller.login, async function(req,res){ activeUser = controller.activeUser(req,res)});
     
     app.post('/signup', controller.signUpUser);    
 
     app.get('/logout', function(req,res){
+
         req.logout();
         req.session.destroy();
         res.redirect('/');
@@ -44,9 +50,8 @@ const routes = (app) => {
     // PROFILE ROUTES
 
     app.get('/profile', async function(req,res) {
-        let activeUser = await controller.activeUser(req, res);
-        console.log("AFTER REDIRECT: " + activeUser)
-        res.render('profile', { user: req.session.passport || undefined , loggedUser: activeUser, editProfile: editing});
+        activeUser = await controller.activeUser(req,res);
+        res.render('profile', { user: req.session.passport || undefined , loggedUser: activeUser, editProfile: editing, userObject: activeUser});
     });
     app.get('/profile/edit', async function(req,res) {
         editing = true;
@@ -56,8 +61,8 @@ const routes = (app) => {
         editing = false;
         let saveFile = await controller.saveProfile(req,res);
         console.log(saveFile);
-        if(saveFile == 1){res.redirect("/");}
-        else { console.log("some error message")};
+        res.redirect("/");
+        
     });
 
     // END PROFILE ROUTES
@@ -74,7 +79,8 @@ const routes = (app) => {
             else
             {
                // console.log(products);
-                res.render('products', {products: products, user: req.session.passport || undefined});
+                activeUser = await controller.activeUser(req,res);
+                res.render('products', {products: products, user: req.session.passport || undefined, userObject: activeUser});
                // console.log(products);
             }
         })
@@ -91,7 +97,8 @@ const routes = (app) => {
              console.log("this is the error: " + err)
             }else{
                 console.log("this is the product: " + product);
-                 res.render('productId',{products: product, user: req.session.passport || undefined});
+                activeUser = await controller.activeUser(req,res);
+                res.render('productId',{products: product, user: req.session.passport || undefined, userObject: activeUser});
             }
             
         });
@@ -99,7 +106,10 @@ const routes = (app) => {
     });
 
 
-    app.get('/addProduct', (req, res) => res.render('addProduct', { user: req.session.passport || undefined }));
+    app.get('/addProduct', (req, res) => {
+        activeUser = await controller.activeUser(req,res);
+        res.render('addProduct', { user: req.session.passport || undefined , userObject: activeUser})
+    });
 
     app.post('/addProduct', function(req, res){// currently working
         upload(req,res,(err) =>{
@@ -126,11 +136,22 @@ const routes = (app) => {
 
     // END PRODUCT ROUTES
 
-    app.get('/cart', (req,res)=> res.render('cart', { user: req.session.passport || undefined }));
+    app.get('/cart', (req,res)=> {
+        activeUser = await controller.activeUser(req,res);
+        res.render('cart', { user: req.session.passport || undefined, userObject: activeUser || undefined})
+    });
     
-    app.get('/contact', (req,res)=> res.render('contact', { user: req.session.passport || undefined }));
+    app.get('/contact', (req,res)=> {
+        activeUser = await controller.activeUser(req,res);
+        res.render('contact', { user: req.session.passport || undefined, userObject: activeUser || undefined})
+    });
     
-    app.get('/staff', (req,res) => res.render('staff', { user: req.session.passport || undefined }));
+    app.get('/staff', async function (req, res){
+      
+                dbStaff = await controller.findStaffAccounts(req,res);
+                activeUser = await controller.activeUser(req,res);
+                res.render('staff', { user: req.session.passport || undefined, userObject: activeUser || undefined, staffAccounts: dbStaff, userObject: activeUser});
+    });
     
 
 

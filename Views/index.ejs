@@ -16,12 +16,16 @@
         <li><a href="/products">Products</a></li>
         <% if(user != undefined){ %>
             <li style="float:right"><a href="/logout">Log out</a></li>
-          <% } else{ %>  
+            <li><a href="/profile">Profile</a></li>
+            <% if(userObject.userType == "Staff") { %>
+                <li><a href="/staff">Staff</a></li>
+            <% } %>
+          <% } else { %>  
             <li style="float:right"><a href="/login">Sign in</a></li>
-         <% } %>
+          <% } %>
         <li><a href="/contact">Contact us</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/staff">Staff</a></li>
+        
+        
     </ul>
 </header>
 <body>
