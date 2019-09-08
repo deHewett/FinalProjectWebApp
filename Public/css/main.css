@@ -171,3 +171,8 @@ footer{
     background-color: #afd275;
     
 }
+#contactContent h1, h2, p{
+    margin: auto;
+    text-align: center;
+
+}

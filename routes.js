@@ -29,7 +29,7 @@ const routes = (app) => {
 
     // LOGIN / OUT ROUTES
 
-    app.get('/login', (req,res) => {
+    app.get('/login', async (req,res) => {
         activeUser = await controller.activeUser(req,res);
         res.render('login', { user: req.session.passport || undefined, userObject: activeUser || undefined})
     });
@@ -71,7 +71,7 @@ const routes = (app) => {
 
     app.get('/products', function (req, res){
       
-        Product.find(function(err, products){
+        Product.find(async function(err, products){
             if(err)
             {
                 console.log(err);
@@ -90,7 +90,7 @@ const routes = (app) => {
         console.log(req.params.id);
         var tempProduct = await Product.findById(req.params.id);
         console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
-        Product.findById(req.params.id, function(err, product)
+        Product.findById(req.params.id, async function(err, product)
         {
             if (err){
                // res.send(err);
@@ -106,7 +106,7 @@ const routes = (app) => {
     });
 
 
-    app.get('/addProduct', (req, res) => {
+    app.get('/addProduct', async (req, res) => {
         activeUser = await controller.activeUser(req,res);
         res.render('addProduct', { user: req.session.passport || undefined , userObject: activeUser})
     });
@@ -181,12 +181,12 @@ const routes = (app) => {
 
     // END PRODUCT ROUTES
 
-    app.get('/cart', (req,res)=> {
+    app.get('/cart', async (req,res)=> {
         activeUser = await controller.activeUser(req,res);
         res.render('cart', { user: req.session.passport || undefined, userObject: activeUser || undefined})
     });
     
-    app.get('/contact', (req,res)=> {
+    app.get('/contact', async (req,res)=> {
         activeUser = await controller.activeUser(req,res);
         res.render('contact', { user: req.session.passport || undefined, userObject: activeUser || undefined})
     });
