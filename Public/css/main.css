@@ -229,7 +229,7 @@ footer{
     font-size: 24px;
   }
   
-  .btn {
+  .arroq {
     background-color: #4CAF50;
     color: white;
     padding: 12px;
@@ -241,7 +241,7 @@ footer{
     font-size: 17px;
   }
   
-  .btn:hover {
+  .arrow:hover {
     background-color: #45a049;
   }
   
