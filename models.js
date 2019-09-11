@@ -80,10 +80,10 @@ const SignUpSchema = new Schema({
 
 var ProductSchema = new Schema({
    
-    /*image:{
+    image:{
         type:String,
         required: 'Upload an image',
-    },*/
+    },
     name:{
         type: String,
         required: 'Enter the name of the product',
