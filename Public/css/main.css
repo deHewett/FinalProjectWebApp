@@ -79,9 +79,21 @@ li a:hover {
 }
 
 /*images*/
-img {
+.img1 {
     height : 118px;
     width:140px
+}
+.img2{
+  height:40%;
+  width:40%;
+}
+.detail{
+  float: right;
+}
+.btn121{
+  padding-left: 70%;
+  padding-bottom: 5%;
+  padding-top: 3%;
 }
 /* heading h1*/
 

@@ -9,27 +9,19 @@
     <body>
         <div id="container">
             <section class="container">
-                <div class="one">
-                    <h3>Select a category</h3>
-                    <a onclick="">Straws</a>
-                    <br>
-                    <a onclick="">Bottles</a>
-                    <br>
-                    <a onclick="">Recycle bag</a>
-                </div>
                 <div class= "two row">
-                        <img src="<%= products.image %>" class="cover-img">
-               <h1><%= products._id %></h1>
-               <h1><%= products.name %></h1>
-               <h1><%= products.description%></h1>
-               <a href='/editProduct/<%= products._id %>'><button class="btn">Edit product</button></a>
-               <a href='/add-to-cart/<%= products._id %>'><button class="btn">Add to cart</button></a>
-                   
-                </div>
+                        <img class="img2 img-responsive" src="<%= products.image %>" class="cover-img">
+              
+                        <h1 class="detail"><%= products.name %></h1>
+                        <h1 class="detail"><%= products.description%></h1>
+                        <div class="btn121">
+                                <a href='/editProduct/<%= products._id %>'><button class="btn">Edit product</button></a>
+                                <a href='/add-to-cart/<%= products._id %>'><button class="btn">Add to cart</button></a>
+                        </div>   
                 </div>
             </section>
             <footer>
-                <% include ./partials/footer %>
+              
             </footer>
         </div>
     </body>
