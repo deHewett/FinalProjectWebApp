@@ -19,11 +19,27 @@ const routes = (app) => {
 
     // HOME ROUTES
 
-    app.get('/',async(req,res) => { 
+    /*app.get('/',async(req,res) => { 
         console.log(req.session);
-        activeUser = await controller.activeUser(req,res);
-        res.render('index', { user: req.session.passport || undefined, userObject: activeUser || undefined});        
+       
+        res.render('index', { user: req.session.passport || undefined, userObject: activeUser || undefined});  */      
         
+    app.get('/', async (req,res) => { 
+      /*  console.log(req.session);
+        res.render('index', { user: req.session.passport || undefined }) */
+        activeUser = await controller.activeUser(req,res);
+        Product.find(function(err, products){
+            if(err)
+            {
+                console.log(err);
+            }
+            else
+            {
+                
+                //console.log(products);
+                res.render('index', {products: products, user: req.session.passport || undefined,  userObject: activeUser || undefined});
+            }
+        })
     });
 
     // END HOME ROUTES
@@ -147,7 +163,7 @@ const routes = (app) => {
    
     app.post('/addProduct', function(req, res){// currently working
 
-        upload(req,res,(err) =>{
+       /* upload(req,res,(err) =>{
             if(err){
                 res.render ('addProduct', {
                     msg: err
@@ -160,6 +176,7 @@ const routes = (app) => {
                 }
                 else{
                     new Product({
+                        image: req.body.image,
                         name: req.body.name,
                         price: req.body.price,
                         description: req.body.description,
@@ -171,19 +188,39 @@ const routes = (app) => {
                             res.redirect('/products');
                            
                         }
-                    })
+                    })*/
+                var  image= req.body.image;
+                       var name= req.body.name;
+                       var price= req.body.price;
+                        var description= req.body.description;
+                        var category=req.body.category;
+                let product = new Product({
+                    image:image,
+                    name:name,
+                    price:price,
+                    description:description,
+                    category: category
+                });
+                product.save(function(err){
+                    if(err){
+                        throw(err);
+                    }
+                    else{
+                        res.redirect("/products")
+                    }
+                })
                    // res.redirect('/products');
                     /*{
                         msg:'File uploaded!',
                         file: `images/${req.file.filename}`,
-                }*/
                 }
-            } 
-        })
-    });
+                }
+            } */
+        });
+    //});
 
          
-    const storage = multer.diskStorage({
+    /*const storage = multer.diskStorage({
         destination : './Public/images/',
         filename: function(req, file,cb){
            cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
@@ -209,7 +246,7 @@ const routes = (app) => {
         } else{
             cb('Error: images only');
         }
-    };
+    };*/
 
     // END PRODUCT ROUTES
     app.get('/add-to-cart/:id', function(req,res){

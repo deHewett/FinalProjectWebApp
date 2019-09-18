@@ -15,59 +15,22 @@
             <div class="row">
                 <div class="MultiCarousel" data-items="1,3,5,6" data-slide="3" id="MultiCarousel"  data-interval="1000">
                     <div class="MultiCarousel-inner">
-                        <div class="item">
-                            <div class="pad15">
-                            <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
+                        
+                        <% if(products.length>0){ %>
+                            <% for (var i=0; i<products.length; i++) { %>
+                            <div class="item">    
+                                    <div class ="pad15">
+                                            <img class="img1" src='<%= products[i].image %>' class="cover-img">
+                                                <p>&dollar;<%= products[i].price %></p>
+                                             <a href='/products'><button class="btn">View product</button></a>
+                                           
+                                    </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                    </div>
+                                <% }%>
+                        <% } else { %>
+                            no record found
+                            <% } %>
+                </div>
                     <button class="btn btn-primary leftLst"><</button>
                     <button class="btn btn-primary rightLst">></button>
                 </div>
@@ -87,156 +50,58 @@
             <div class="row">
                 <div class="MultiCarousel" data-items="1,3,5,6" data-slide="3" id="MultiCarousel"  data-interval="1000">
                     <div class="MultiCarousel-inner">
-                        <div class="item">
-                            <div class="pad15">
-                            <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
+                            <% if(products.length>0){ %>
+                                <% for (var i=0; i<products.length; i++) { %>
+                                <div class="item">    
+                                        <div class ="pad15">
+                                                <img class="img1" src='<%= products[i].image %>' class="cover-img">
+                                                    <p>&dollar;<%= products[i].price %></p>
+                                                 <a href='/products'><button class="btn">View product</button></a>
+                                               
+                                        </div>
+                                </div>
+                                    <% }%>
+                            <% } else { %>
+                                no record found
+                                <% } %>
                     </div>
                     <button class="btn btn-primary leftLst"><</button>
                     <button class="btn btn-primary rightLst">></button>
                 </div>
             </div>
         </div>
+        <h1>Bottles</h1>
         <!--Third carousel-->
-        <h1>Bottles <em>BPA free</em></h1>
         <div class="container">
-            <div class="row">
-                <div class="MultiCarousel" data-items="1,3,5,6" data-slide="3" id="MultiCarousel"  data-interval="1000">
-                    <div class="MultiCarousel-inner">
-                        <div class="item">
-                            <div class="pad15">
-                            <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bottles.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
+                <div class="row">
+                    <div class="MultiCarousel" data-items="1,3,5,6" data-slide="3" id="MultiCarousel"  data-interval="1000">
+                        <div class="MultiCarousel-inner">
+                                <% if(products.length>0){ %>
+                                    <% for (var i=0; i<products.length; i++) { %>
+                                    <div class="item">    
+                                            <div class ="pad15">
+                                                    <img class="img1" src='<%= products[i].image %>' class="cover-img">
+                                                        <p>&dollar;<%= products[i].price %></p>
+                                                     <a href='/products'><button class="btn">View product</button></a>
+                                                   
+                                            </div>
+                                    </div>
+                                        <% }%>
+                                <% } else { %>
+                                    no record found
+                                    <% } %>
                         </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bag.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/bottles.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <!-- <p class="lead">Multi Item Carousel</p>-->
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bottles.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bottles.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/bottles.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="pad15">
-                                <img class="lead" src="/images/straw.jpg" alt="Recycle bag">
-                                <p> $ 10</p>
-                            </div>
-                        </div>
+                        <button class="btn btn-primary leftLst"><</button>
+                        <button class="btn btn-primary rightLst">></button>
                     </div>
-                    <button class="btn btn-primary leftLst"><</button>
-                    <button class="btn btn-primary rightLst">></button>
                 </div>
             </div>
+       
         </div>
         <br>
         <br>
         <footer>
-            <% include ./partials/footer %>
+          
         </footer>
     </div>
 </body>

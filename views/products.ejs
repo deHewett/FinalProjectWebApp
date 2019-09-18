@@ -8,7 +8,7 @@
     </header>
     <body>
         <div id="container">
-            <h1>This is all the products!</h1>
+            <h1>Products!</h1>
             <hr>
         <!--<div>
                 <h3>Select Category:</h3>
@@ -19,19 +19,19 @@
                 </form>
             </div>--> 
             <section class="container">
-                <div class="one">
+              <!--  <div class="one">
                     <h3>Select a category</h3>
                     <a onclick="">Straws</a>
                     <br>
                     <a onclick="">Bottles</a>
                     <br>
                     <a onclick="">Recycle bag</a>
-                </div>
+                </div>-->
                 <div class= "two row" > 
                     <% if(products.length>0){ %>
                         <% for (var i=0; i<products.length; i++) { %>
                                 <div class="column">
-                                        <img src='<%= products[i].image %>' class="cover-img">
+                                        <img class="img1" src='<%= products[i].image %>' class="cover-img">
                                             <p><%= products[i].name %></p>
                                             <h3>&dollar;<%= products[i].price %></h3>
                                          <a href='/products/<%= products[i].id %>'><button class="btn">View product</button></a>

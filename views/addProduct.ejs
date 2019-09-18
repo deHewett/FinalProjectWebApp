@@ -11,14 +11,16 @@
 <body>
     <div style="text-align: center"> 
         <h1> Add product</h1>
-        <form action="/addProduct" method="post" enctype="multipart/form-data">
-            <%= typeof msg != 'undefined' ? msg : '' %> 
+        <form action="/addProduct" method="post" enctype="application/x-www-form-urlencoded">
+         <!--   <%= typeof msg != 'undefined' ? msg : '' %> 
             <div class="file-field input-field">
                 <label>Upload file:</label>
-                <input name="image" type="file" >
+                <input name="image" type="text" >
             </div>
-           <!-- <form action="/addProduct" method="post"  enctype="application/x-www-form-urlencoded">
+            <form action="/addProduct" method="post"  enctype="application/x-www-form-urlencoded">
             </form >-->
+            <label>Upload file:</label>
+                <input name="image" type="text" >
             <br>
             <label>Name:</label>
             <input name="name" type="text"/>

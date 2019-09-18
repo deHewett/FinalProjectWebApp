@@ -79,9 +79,21 @@ li a:hover {
 }
 
 /*images*/
-img {
+.img1 {
     height : 118px;
     width:140px
+}
+.img2{
+  height:40%;
+  width:40%;
+}
+.detail{
+  float: right;
+}
+.btn121{
+  padding-left: 70%;
+  padding-bottom: 5%;
+  padding-top: 3%;
 }
 /* heading h1*/
 
@@ -234,7 +246,7 @@ footer{
     font-size: 24px;
   }
   
-  .btn {
+  .arroq {
     background-color: #4CAF50;
     color: white;
     padding: 12px;
@@ -246,7 +258,7 @@ footer{
     font-size: 17px;
   }
   
-  .btn:hover {
+  .arrow:hover {
     background-color: #45a049;
   }
   
