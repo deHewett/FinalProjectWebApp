@@ -161,34 +161,8 @@ const routes = (app) => {
 
     // multer function 
    
-    app.post('/addProduct', function(req, res){// currently working
-
-       /* upload(req,res,(err) =>{
-            if(err){
-                res.render ('addProduct', {
-                    msg: err
-                });
-            }else {
-                console.log(req.file);
-                //req.file.toString();
-                if (req.file == undefined){
-                    res.render('addProduct',{msg: 'Error: no file selected'});
-                }
-                else{
-                    new Product({
-                        image: req.body.image,
-                        name: req.body.name,
-                        price: req.body.price,
-                        description: req.body.description,
-                        category:req.body.category
-                    }).save(function(err){
-                        if (err){
-                            throw(err)
-                        }else{
-                            res.redirect('/products');
-                           
-                        }
-                    })*/
+    app.post('/addProduct', function(req, res){
+        // currently working
                 var  image= req.body.image;
                        var name= req.body.name;
                        var price= req.body.price;
@@ -209,44 +183,8 @@ const routes = (app) => {
                         res.redirect("/products")
                     }
                 })
-                   // res.redirect('/products');
-                    /*{
-                        msg:'File uploaded!',
-                        file: `images/${req.file.filename}`,
-                }
-                }
-            } */
+                  
         });
-    //});
-
-         
-    /*const storage = multer.diskStorage({
-        destination : './Public/images/',
-        filename: function(req, file,cb){
-           cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); 
-        }
-    })
-    const upload = multer ({
-        storage: storage,
-        fileFilter: function(req, file, cb){
-            checkFileType(file,cb);
-        }
-    }).single('image');
-
-    function checkFileType(file, cb){
-        //allowed ext
-        const filetypes = /jpeg|jpg|png|gif/;
-        //check ext
-        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-        //check mime
-        const mimetype = filetypes.test(file.mimetype);
-
-        if(mimetype && extname){
-            return cb(null, true);
-        } else{
-            cb('Error: images only');
-        }
-    };*/
 
     // END PRODUCT ROUTES
     app.get('/add-to-cart/:id', function(req,res){
