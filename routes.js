@@ -105,8 +105,8 @@ const routes = (app) => {
 
     app.get('/products/:id', async function(req, res){
         console.log(req.params.id);
-        var tempProduct = await Product.findById(req.params.id);
-        console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
+       // var tempProduct = await Product.findById(req.params.id);
+        //console.log("THIS IS THE TEMMPPRODUCT: " + tempProduct)
         Product.findById(req.params.id, async function(err, product)
         {
             if (err){
@@ -120,6 +120,45 @@ const routes = (app) => {
             
         });
        
+    });
+    app.get('/straw', async function(req,res){
+        
+
+        Product.find({'category': "straw"}, async function(err, product){
+            if (err){
+                console.log("This is the error: " + err)
+            } else{
+                activeUser= await controller.activeUser(req,res);
+                res.render('straw', {products: product, user: req.session.passport || undefined})
+            }
+        });
+
+    });
+    app.get('/bag', async function(req,res){
+        
+
+        Product.find({'category': "bag"}, async function(err, product){
+            if (err){
+                console.log("This is the error: " + err)
+            } else{
+                activeUser= await controller.activeUser(req,res);
+                res.render('straw', {products: product, user: req.session.passport || undefined})
+            }
+        });
+
+    });
+    app.get('/bottles', async function(req,res){
+        
+
+        Product.find({'category': "bottles"}, async function(err, product){
+            if (err){
+                console.log("This is the error: " + err)
+            } else{
+                activeUser= await controller.activeUser(req,res);
+                res.render('straw', {products: product, user: req.session.passport || undefined})
+            }
+        });
+
     });
     app.get('/editProduct/:id', async function(req, res){
         Product.findById(req.params.id, function (err, product)
@@ -203,12 +242,13 @@ const routes = (app) => {
     });
 
     app.get('/cart', async function(req,res){
-        activeUser = await controller.activeUser(req,res);
+        
         if (!req.session.cart){
             return res.render('cart', {products: null});
         }
         var cart = new Cart(req.session.cart);
-        res.render('cart', { user: req.session.passport || undefined, userObject: activeUser || undefined, products: cart.generateArray(), totalPrice: cart.totalPrice, name: cart.name, qty:cart.totalQty});
+        
+        res.render('cart', { user: req.session.passport || undefined, products: cart.generateArray(), totalPrice: cart.totalPrice, name: cart.name, qty:cart.totalQty});
 
 
     });

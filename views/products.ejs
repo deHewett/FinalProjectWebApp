@@ -19,14 +19,14 @@
                 </form>
             </div>--> 
             <section class="container">
-              <!--  <div class="one">
+                <div class="one">
                     <h3>Select a category</h3>
-                    <a onclick="">Straws</a>
+                    <a href='/straw'>Straws</a>
                     <br>
-                    <a onclick="">Bottles</a>
+                    <a href='/bottles'>Bottles</a>
                     <br>
-                    <a onclick="">Recycle bag</a>
-                </div>-->
+                    <a href='/bag'>Recycle bag</a>
+                </div>
                 <div class= "two row" > 
                     <% if(products.length>0){ %>
                         <% for (var i=0; i<products.length; i++) { %>
@@ -44,9 +44,10 @@
                    
                         
                 </div>
+               
             </section>
             <footer>
-                    <% include ./partials/footer %>
+                <% include ./partials/footer %>
             </footer>
         </div>
     </body>

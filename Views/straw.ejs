@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include ./partials/head %> 
+    </head>
+    <header>
+        <% include ./partials/header %>
+    </header>
+    <body>
+            <section class="container">
+                    <div class="one">
+                            <h3>Select a category</h3>
+                            <a href='/straw'>Straws</a>
+                            <br>
+                            <a href='/bottles'>Bottles</a>
+                            <br>
+                            <a href='/bag'>Recycle bag</a>
+                        </div>
+                <div class= "two row">
+                    <% if(products.length>0){ %>
+                        <% for (var i=0; i<products.length; i++) { %>
+                                <div class="column">
+                                        <img class="img1" src='<%= products[i].image %>' class="cover-img">
+                                            <p><%= products[i].name %></p>
+                                            <h3>&dollar;<%= products[i].price %></h3>
+                                         <a href='/products/<%= products[i].id %>'><button class="btn">View product</button></a>
+                                       
+                                </div>
+                            <% }%>
+                    <% } else { %>
+                        no record found
+                        <% } %>  
+                </div>
+            </section>
+            <footer>
+              
+            </footer>
+        
+    </body>
+</html>

@@ -23,6 +23,13 @@ li a:hover {
     background-color: #afd275;
 }
 
+.header{
+  overflow: hidden;
+	position: relative;
+}
+.footer{
+  position: absolute;
+}
 /*login page css*/
 
 #login-form input{
@@ -39,7 +46,7 @@ li a:hover {
 }
 
 #signup-form input{
-    margin-top: 10px;
+    margin-top: 0px;
     width: 60%;
 }
 #signup-form label{
@@ -48,7 +55,7 @@ li a:hover {
     width: 150px;
 }
 #signup-form button{
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 154px;
     width: 60.5%;
 }
@@ -70,12 +77,13 @@ li a:hover {
     width: 55%;
     height: 90vh;
     background-color: #f9f9f9;
+    margin-bottom: 10px;
 }
 #signup-form{
     margin-left: 6%;
     position: absolute;
-    top: 40%;
-    width: 50%
+    width: 50%;
+    
 }
 
 /*images*/
@@ -153,17 +161,16 @@ h1 {
   }
 
 /* footer*/
-#container{
-    height: 100%;
+body{
+  
     position: relative;
 }
 
 footer{
-    position: absolute;;
-    bottom:0;
+    position: absolute;
     width:100%;
-    height:auto;   
-   
+    top:100%;
+    margin-bottom: 0px;
 }
 /* buy button*/
 
