@@ -217,7 +217,7 @@ const routes = (app) => {
                 });
                 product.save(function(err){
                     if(err){
-                        throw(err);
+                        res.redirect("/addProduct")
                     }
                     else{
                         res.redirect("/products")
