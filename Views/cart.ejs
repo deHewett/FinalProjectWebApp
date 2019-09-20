@@ -23,6 +23,7 @@
         </ul>
     </header>
     <body>
+        <div class="relative">
             <% if (products) { %>
                         <div class="row">
                                 <div class="col-25">
@@ -105,9 +106,12 @@
             <h1>cart is empty</h1>
             <a href='/products %>'><button class="">Continue Shopping</button></a>
             <% } %>
-            <footer>
-                    <% include ./partials/footer %>
-            </footer>
+            <div class="absolute">
+                <footer>
+                        <% include ./partials/footer %>
+                </footer>
+            </div>
+        </div>
     </body>
     
 </html>

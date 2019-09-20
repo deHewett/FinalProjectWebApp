@@ -176,6 +176,7 @@ const routes = (app) => {
     app.post('/editProduct/:id', function(req,res){
         console.log("my id is " + req.params.id);
        const updatingData = {
+           image: req.body.image,
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
